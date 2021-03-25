@@ -1516,3 +1516,32 @@ class Connection(object):
 
         self.write_data(dynamixel_id, pk.GOAL_POSITION, params)
 
+
+    ####################################################################
+    ######################### Danilos addition #########################
+
+    def set_torque_limit(self, dynamixel_id, torque_limit):
+        """Set the *torque limit* for the specified Dynamixel unit.
+
+        :param int dynamixel_id: the unique ID of a Dynamixel unit. It must be
+            in range (0, 0xFE).
+        :param int torque_limit: the new torque limit. It must be in range (0, 1023)
+            i.e. (0, 0x3FF) in hexadecimal notation.
+        """
+        params = utils.int_to_little_endian_bytes(torque_limit)
+    
+        self.write_data(dynamixel_id, pk.TORQUE_LIMIT, params)
+    
+    def led_control(self, dynamixel_id, led_state=True):
+        """Set the *LED state* for the specified
+        Dynamixel unit.
+
+        :param int dynamixel_id: the unique ID of a Dynamixel unit. It must be
+            in range (0, 0xFE).
+        :param bool led_state: New led state. If ``True`` the LED will be ON,
+            if ``False`` the LED will be OFF
+        """
+        
+        params = utils.int_to_little_endian_bytes(led_state)
+        
+        self.write_data(dynamixel_id, pk.LED, params)
